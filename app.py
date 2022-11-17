@@ -18,11 +18,6 @@ def indexHtml():
     return render_template('index.html');
 
 
-# @app.route('/')
-# def p4_home():
-#     return render_template('p4_index.html')
-
-
 @app.route("/p4_user", methods=["POST"])
 def p4_user_post():
     p4_name_receive = request.form['p4_name_give']
@@ -73,6 +68,11 @@ def p2home():
 @app.route('/individual/p3')
 def p3Html():
     return render_template('individual/p3.html');
+
+@app.route('/individual/p4')
+def p4_home():
+    return render_template('individual/p4.html')
+
 
 
 @app.route('/individual/p3Test')
