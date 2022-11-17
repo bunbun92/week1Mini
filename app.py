@@ -65,7 +65,17 @@ def moreHtml():
     return render_template('more.html');
 
 
-@app.route('/individual/p2')
+@app.route('/individual/p0')
+def p0home():
+    return render_template('/individual/p0.html')
+
+
+# @app.route('/individual/p1') ##은정님꺼 아직 안받음
+# def p1home():
+#     return render_template('/individual/p1.html')
+
+
+@app.route('/individual/p2') ##준혁님만 구현해놈
 def p2home():
     return render_template('/individual/p2.html')
 
@@ -75,9 +85,15 @@ def p3Html():
     return render_template('individual/p3.html');
 
 
-@app.route('/individual/p3Test')
-def p3TestHtml():
-    return render_template('individual/p3Test.html');
+@app.route('/individual/p4')
+def p4home():
+    return render_template('/individual/p4.html')
+
+
+
+# @app.route('/individual/p3Test')
+# def p3TestHtml():
+#     return render_template('individual/p3Test.html');
 
 
 @app.route("/p2_comment", methods=["POST"])
