@@ -81,7 +81,7 @@ def p3TestHtml():
 
 
 @app.route("/p2_comment", methods=["POST"])
-def comment_post():
+def p2_comment_post():
     comment_receive = request.form['comment_give']
     doca = {
         'comment': comment_receive,
@@ -91,25 +91,25 @@ def comment_post():
 
 
 @app.route("/p2_comment", methods=["GET"])
-def comment_get():
+def p2_comment_get():
     comment_list = list(db.p2_comment.find({}, {'_id': False}))
     return jsonify({'comment': comment_list})
 
 
-@app.route('/comment', methods=['GET'])
-def comment_get():
-    allComments = list(db.comments.find({}, {'_id': False}));
+@app.route('/p3_comment', methods=['GET'])
+def p3_comment_get():
+    allComments = list(db.p3_comments.find({}, {'_id': False}));
 
     return jsonify({'result': 'success', 'allComments': allComments, 'msg': '수신 완료'});
 
 
-@app.route('/comment', methods=['POST'])
-def comment_post():
+@app.route('/p3_comment', methods=['POST'])
+def p3_comment_post():
     comment_receive = request.form['comment_give']
     hour_receive = request.form['hour_give']
     minute_receive = request.form['minute_give']
 
-    allComments = list(db.comments.find({}, {'_id': False}));
+    allComments = list(db.p3_comments.find({}, {'_id': False}));
     commentsLength = len(allComments);
 
     if commentsLength == 0:
@@ -125,16 +125,16 @@ def comment_post():
 
     }
 
-    db.comments.insert_one(doc)
+    db.p3_comments.insert_one(doc)
 
     return jsonify({'result': 'success', 'msg': '작성 완료!'})
 
 
-@app.route('/comment/delete', methods=['POST'])
-def comment_delete():
+@app.route('/p3_comment/delete', methods=['POST'])
+def p3_comment_delete():
     num_receive = request.form['num_give']
 
-    db.comments.delete_one({'num': int(num_receive)});
+    db.p3_comments.delete_one({'num': int(num_receive)});
 
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
@@ -142,7 +142,7 @@ def comment_delete():
 
 # 방명록 작성
 @app.route('/p0_guestBook', methods=['POST'])
-def write_guestbook():
+def p0_write_guestbook():
     name_receive = request.form['name_give']
     content_receive = request.form['content_give']
 
@@ -159,21 +159,17 @@ def write_guestbook():
 # 방명록 불러오기
 
 @app.route('/p0_guestBook', methods=['GET'])
-def read_guestbook():
+def p0_read_guestbook():
     comment = list(db.p0.find({}, {'_id': False}))
     return jsonify({'all_contents': comment})
 
 # 방명록 삭제
 
 @app.route('/p0_delete', methods=['POST'])
-def delete_comment():
+def p0_delete_comment():
     name_receive = request.form['name_give']
     db.p0.delete_one({'name': name_receive})
     return jsonify({'msg': '삭제 완료!'})
-
-# @app.route('/mypage')
-# def mypage():
-#    return '<button>나는버튼이다</button>';
 
 
 if __name__ == '__main__':

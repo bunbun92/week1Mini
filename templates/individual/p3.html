@@ -58,7 +58,7 @@
         function getAllComments(){
             $.ajax({
                 type: "GET",
-                url: "/comment",
+                url: "/p3_comment",
                 data: {},
                 success: function (response) {
                     console.log(response['allComments'])
@@ -113,7 +113,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/comment",
+                url: "/p3_comment",
                 data: {comment_give: comment, hour_give: hour, minute_give: minute},
                 success: function (response) {
 
@@ -132,7 +132,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/comment/delete",
+                url: "/p3_comment/delete",
                 data: {num_give: num},
                 success: function (response) {
                     console.log(response['msg']);
