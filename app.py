@@ -24,9 +24,9 @@ def moreHtml():
    return render_template('more.html');
 
 
-@app.route('/p2')
+@app.route('/individual/p2')
 def p2home():
-   return render_template('p2.html')
+   return render_template('/individual/p2.html')
 
 
 @app.route('/individual/p3')

@@ -1,10 +1,241 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
+    
+
+    <title>누구세요? 변준혁</title>
+    <style>
+        .face {
+            border-radius: 70%;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mytitle {
+            width: 100%;
+            height: 100px;
+            background-color: rgba(97, 159, 252, 0.774);
+            padding-left: 100px;
+            padding-top: 20px;
+        }
+
+        * {
+            font-family: 'Stylish', sans-serif;
+        }
+
+        .pull {
+            position: relative;
+            margin: 200px;
+            padding: 20px;
+            width: 200px;
+            height: 60px;
+            color: #FFF;
+            border-radius: 10px;
+            background-color: #000;
+            font-size: 40px;
+        }
+
+        .pull:after {
+            content: "";
+            position: absolute;
+            top: 21px;
+            right: 1000px;
+            left: -30px;
+            border-right: 30px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .pul {
+            position: relative;
+            margin: 200px;
+            padding: 20px;
+            width: 200px;
+            height: 60px;
+            color: #FFF;
+            border-radius: 10px;
+            background-color: #000;
+            font-size: 40px;
+        }
+
+        .pul:after {
+            content: "";
+            position: absolute;
+            top: 21px;
+            right: -30px;
+            border-left: 30px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .pu {
+            position: relative;
+            margin: 200px;
+            padding: 20px;
+            width: 200px;
+            height: 60px;
+            color: #FFF;
+            border-radius: 10px;
+            background-color: #000;
+            font-size: 40px;
+        }
+        .mypost {
+            margin-left: 25%;
+            margin-top: 50px;
+        }
+        .mycards {
+            margin-left: 25%;
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            show_comment()
+        });
+        function save_comment() {
+            let comment = $('#comment').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/p2_comment',
+                data: {comment_give:comment},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+        }
+
+        function show_comment() {
+            // $('#comment-list').empty()
+            $.ajax({
+                type: "GET",
+                url: "/p2_comment",
+                data: {},
+                success: function (response) {
+                    let rows = response['comment']
+                    for (let i =0; i < rows.length; i++) {
+                        let comment = rows[i]['comment']
+
+                        let temp_html = `<div class="card" style="width: 1000px">
+                                            <div class="card-body">
+                                                <blockquote class="blockquote mb-0">
+                                                    <p>${comment}</p>
+                                                </blockquote>
+                                            </div>
+                                        </div>`
+                        $('#comment-list').append(temp_html)
+                    }
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body style="background-color: rgb(208, 232, 252);">
+    <h1 class="mytitle">
+        <button style="background-color : rgba(0,0,0,0); border: none;" onclick="history.back()">
+            &#60;
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        변준혁&nbsp;&nbsp;&nbsp;&nbsp;
+        <p style="font-size:25px; display:inline;">
+            https://github.com/dial11/note
+        </p>
+        <p style="font-size:25px; text-align: right;">
+            <script>
+                date = new Date().toLocaleDateString();
+                document.write(date);
+            </script>
+        </p>
+    </h1>
+    &nbsp;
+    <div>
+        <div class="face">
+            <img class="profile" src="https://ca.slack-edge.com/T043597JK8V-U043VM9EFM0-c8de68730805-512">
+        </div>
+        <div class="pull" style="display:inline;">안녕하세요?!</div>
+    </div>
+    <div style="transform: scaleX(-1);">
+        <div class="face">
+            <img class="profile" src="https://i.pinimg.com/236x/0d/5c/6b/0d5c6bb749e1e51eb14c79aa0cbb2ca2.jpg">
+        </div>
+    </div>
+    <div style="text-align :right">
+        <div class="pul" style="display:inline;">누구세요?!</div>
+    </div>
+    <div>
+        <div class="face">
+            <img class="profile" src="https://ca.slack-edge.com/T043597JK8V-U043VM9EFM0-c8de68730805-512">
+        </div>
+        <div class="pull" style="display:inline;">
+            제 이름은 변준혁입니다!</div>
+    </div>
+    <div class="pu" style="display:inline;">1993년 04월 26일에 태어났습니다.</div><br>
+    <div class="pu" style="display:inline;">사회복지를 전공했으며 개발자로서는 첫 걸음입니다.</div><br>
+    <div class="pu" style="display:inline;">우엉차를 즐겨마십니다, 말린 우엉을 우려서 먹습니다 직접 말린건 아닙니다.</div><br>
+    <div class="pu" style="display:inline;">제 MBTI는 ISTP입니다.</div><br>
+
+    <div style="transform: scaleX(-1);">
+        <div class="face">
+            <img class="profile" src="https://i.pinimg.com/236x/0d/5c/6b/0d5c6bb749e1e51eb14c79aa0cbb2ca2.jpg">
+        </div>
+    </div>
+    <div style="text-align :right">
+        <div class="pul" style="display:inline;">장점은 무엇인가요?</div>
+    </div>
+    <div>
+        <div class="face">
+            <img class="profile" src="https://ca.slack-edge.com/T043597JK8V-U043VM9EFM0-c8de68730805-512">
+        </div>
+        <div class="pull" style="display:inline;">
+            약속을 잘 어기지 않습니다.</div>
+    </div>
+    <div class="pu" style="display:inline;">남에게 무리한 부탁은 하지 않습니다.</div><br>
+    <div class="pu" style="display:inline;">말을 잘 들어 줍니다.</div><br>
+
+    <div style="transform: scaleX(-1);">
+        <div class="face">
+            <img class="profile" src="https://i.pinimg.com/236x/0d/5c/6b/0d5c6bb749e1e51eb14c79aa0cbb2ca2.jpg">
+        </div>
+    </div>
+    <div style="text-align :right">
+        <div class="pul" style="display:inline;">협업을 하는 과정에서의 자신의 스타일은 무엇인가요?</div>
+    </div>
+    <div>
+        <div class="face">
+            <img class="profile" src="https://ca.slack-edge.com/T043597JK8V-U043VM9EFM0-c8de68730805-512">
+        </div>
+        <div class="pull" style="display:inline;">
+            조용한 편으로 나서는 것이 힘듭니다,,</div>
+    </div>
+    <div class="pu" style="display:inline;">대화를 잘 듣고 적극적으로 수용합니다.</div><br>
+
+    <div class="mypost">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Leave a comment here" id="comment" style="width: 1000px">
+            <label for="floatingInput">comment</label>
+        </div>
+        <button onclick="save_comment()" type="button" class="btn btn-dark">댓글 남기기</button>
+    </div>
+    <div class="mycards" id="comment-list"></div>
 </html>
