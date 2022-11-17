@@ -70,7 +70,7 @@ def p0home():
 #     return render_template('/individual/p1.html')
 
 
-@app.route('/individual/p2') ##준혁님만 구현해놈
+@app.route('/individual/p2')
 def p2home():
     return render_template('/individual/p2.html')
 

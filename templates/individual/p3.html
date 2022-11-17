@@ -45,20 +45,20 @@
 
 
         function deleteCommentZone(){
-            $('#showComments').load(location.href + ' #showComments');
-            $('#comment').load(location.href + ' #comment');
-            $('#comment').value = null;
+            // $('#showComments').load(location.href + ' #showComments');
+            // $('#showComments').text("");
+            document.getElementById("showComments").innerHTML= "";
+            // $('#comment').load(location.href + ' #comment');
+            // $('#comment').value = null;
         }
 
         function reloadArea() {
 
             // deleteCommentZone();
-            // getAllComments();
-            setInterval(deleteCommentZone(), 200);
-            setInterval(getAllComments(), 200);
+            getAllComments();
+            // setInterval(deleteCommentZone(), 200);
+            // setInterval(getAllComments(), 200);
         }
-
-
 
         function getAllComments(){
             $.ajax({
@@ -72,6 +72,8 @@
 
                     let rows = response['allComments'];
                     let tempHtml =``;
+
+                    deleteCommentZone();
 
                     for(let i = 0; i < rows.length; i++){
                         let comment = rows[i]['comment'];
@@ -97,9 +99,11 @@
                         $('#showComments').append(tempHtml);
 
                     }
+
                 }
             })
         }
+
 
         function saveComment(){
 
