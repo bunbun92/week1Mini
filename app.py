@@ -138,6 +138,38 @@ def comment_delete():
 
     return jsonify({'result': 'success', 'msg': '삭제 완료!'})
 
+# p0 강성주 app.py
+
+# 방명록 작성
+@app.route('/p0_guestBook', methods=['POST'])
+def write_guestbook():
+    name_receive = request.form['name_give']
+    content_receive = request.form['content_give']
+
+    doc = {
+        'name': name_receive,
+        'content': content_receive,
+        'likes': 0
+    }
+
+    db.p0.insert_one(doc)
+
+    return jsonify({'msg': '저장완료!'})
+
+# 방명록 불러오기
+
+@app.route('/p0_guestBook', methods=['GET'])
+def read_guestbook():
+    comment = list(db.p0.find({}, {'_id': False}))
+    return jsonify({'all_contents': comment})
+
+# 방명록 삭제
+
+@app.route('/p0_delete', methods=['POST'])
+def delete_comment():
+    name_receive = request.form['name_give']
+    db.p0.delete_one({'name': name_receive})
+    return jsonify({'msg': '삭제 완료!'})
 
 # @app.route('/mypage')
 # def mypage():
