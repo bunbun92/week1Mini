@@ -65,9 +65,9 @@ def p0home():
     return render_template('/individual/p0.html')
 
 
-# @app.route('/individual/p1') ##은정님꺼 아직 안받음
-# def p1home():
-#     return render_template('/individual/p1.html')
+@app.route('/individual/p1') ##은정
+def p1home():
+    return render_template('/individual/p1.html')
 
 
 @app.route('/individual/p2')
@@ -95,6 +95,21 @@ def p4home():
 # def p3TestHtml():
 #     return render_template('individual/p3Test.html');
 
+##은정---------
+@app.route('/p1_chat', methods=['POST'])
+def p1_chat_post():
+   visitChat_receive = request.form['visitChat_give']
+   doc = {
+      'visitChat': visitChat_receive,
+   }
+   db.p1_chat.insert_one(doc)
+   return jsonify({'msg': '긍정 방명록 작성 완료!'})
+
+@app.route('/p1_chat', methods=['GET'])
+def p1_chat_get():
+   chat_list = list(db.p1_chat.find({}, {'_id': False}))
+   return jsonify({'visitChat': chat_list})
+##---------은정
 
 @app.route("/p2_comment", methods=["POST"])
 def p2_comment_post():
