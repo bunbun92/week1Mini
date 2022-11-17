@@ -42,6 +42,8 @@
 
         }
 
+
+
         function deleteCommentZone(){
             $('#showComments').load(location.href + ' #showComments');
             $('#comment').load(location.href + ' #comment');
@@ -50,10 +52,13 @@
 
         function reloadArea() {
 
-            deleteCommentZone();
-            // setInterval(getAllComments(),200);
-            getAllComments();
+            // deleteCommentZone();
+            // getAllComments();
+            setInterval(deleteCommentZone(), 200);
+            setInterval(getAllComments(), 200);
         }
+
+
 
         function getAllComments(){
             $.ajax({
