@@ -1,30 +1,7 @@
-<!doctype html>
-<html lang="en">
+let talkingBundleList = [];
+        let cnt = 0;
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-
-    <title>승훈인데요</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <style>
-
-    </style>
-
-  <script>
-
-      let talkingBundleList = [];
-      let cnt = 0;
-
-    function insertTalkingBundleToList(){
+        function insertTalkingBundleToList() {
 
             let talkingBundle = `<div class="left" onclick="showNextTalk()">
                                     <br><br><br>
@@ -248,23 +225,115 @@
 
             talkingBundleList.push(talkingBundle);
 
-            talkingBundle = ` `.split('<!spl>');
+            talkingBundle = `<div class="right" onclick="showNextTalk()">
+                                <span class = "currentTime">
+                                    09:18
+                                </span>
+                                    <span class="rightSpan">
+                                        협업할 때는 어떤 스타일이신가요?
+                                    </span>
+                            </div> `.split('<!spl>');
+
+            talkingBundleList.push(talkingBundle);
+
+            talkingBundle = `<div class="left" onclick="showNextTalk()">
+            <img class="profileImage" src="../../static/3.png">
+            <span class="name">
+                신승훈
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                저는 협업할 때 좋은 의견에 맞추어 따르는 스타일입니다!
+            </span>
+            <br><!spl>
+
+
+            <span class="leftSpan">
+                 그리고 저는 팀 내에서 최소한
+            </span>
+            <br><!spl>
+
+
+            <span class="leftSpan">
+                1인분은 하지않으면
+            </span>
+            <br><!spl>
+
+
+            <span class="leftSpan">
+                 마음이 불편해지기 때문에 제 역할은 다 하는 성격입니다
+            </span>
+            <span class = "currentTime">
+                09:18
+            </span>
+            <br>
+
+
+        </div> `.split('<!spl>');
+
+            talkingBundleList.push(talkingBundle);
+
+            talkingBundle = `<div class="right" onclick="showNextTalk()">
+                                <span class = "currentTime">
+                                    09:19
+                                </span>
+                                    <span class="rightSpan">
+                                        그렇군요!!
+                                    </span>
+                            </div> `.split('<!spl>');
+
+            talkingBundleList.push(talkingBundle);
+
+            talkingBundle = `<div class="left" onclick="showNextTalk()">
+                                <img class="profileImage" src="../../static/3.png">
+                                <span class="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+                                <span class="leftSpan">
+                                    네!!!!
+                                </span>
+                                <br><!spl>
+
+
+                                <span class="leftSpan">
+                                     수료하는 그날까지
+                                </span>
+                                <br><!spl>
+
+
+                                <span class="leftSpan">
+                                    열심히 달려보겠습니다!
+                                </span>
+                                <span class = "currentTime">
+                                    09:19
+                                </span>
+                                <br>
 
 
 
-            talkingBundle = ` `.split('<!spl>');
+
+
+
+
+                            </div>`.split('<!spl>');
+
+            talkingBundleList.push(talkingBundle);
+
+
+            // talkingBundle = ` `.split('<!spl>');
 
         }
 
-
-
         insertTalkingBundleToList();
 
-        function showNextTalk(){
+        function showNextTalk() {
 
             let tempHtml = ``;
 
-            for(let i=0; i<talkingBundleList[cnt].length; i++){
+            for (let i = 0; i < talkingBundleList[cnt].length; i++) {
 
                 tempHtml = talkingBundleList[cnt][i];
                 $('#testd').append(tempHtml);
@@ -277,20 +346,3 @@
         }
 
         console.log(talkingBundleList.length)
-
-  </script>
-
-
-</head>
-<body>
-
-    <button onclick="showNextTalk()">
-        오매
-    </button>
-
-    <div id="testd">
-        테스트
-    </div>
-
-</body>
-</html>

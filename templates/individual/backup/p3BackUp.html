@@ -22,6 +22,7 @@
         });
 
         function reloadArea() {
+
             $('#showComments').load(location.href + ' #showComments');
             $('#comment').load(location.href + ' #comment');
             $('#comment').value = null;
@@ -66,12 +67,15 @@
                         $('#showComments').append(tempHtml);
 
                     }
+
+
+
                 }
             })
         }
 
-        function getAComment(num){
 
+        function getAComment(num){
 
         }
 
@@ -100,7 +104,8 @@
             })
         }
 
-        function deleteComment(num){
+
+         function deleteComment(num){
 
             $.ajax({
                 type: "POST",
@@ -113,23 +118,6 @@
                     // reloadArea()
                 }
             })
-        }
-
-
-        const talkingList = [];
-        function insertTalkingBundleToList(){
-
-            const talkingBundle = '베리 베리 베리 '.split(' ');
-
-            talkingBundle[0] = ``;
-        }
-
-
-
-        function getATalkingBubble(num){
-
-
-
         }
 
 
@@ -152,6 +140,8 @@
         // }
 
         function showPastTime(){
+
+
         }
 
     </script>
@@ -366,6 +356,7 @@
 
 
         <div class="left">
+            <br><br><br>
             <img class = "profileImage" src="../../static/3.png" >
             <span class ="name">
                 신승훈

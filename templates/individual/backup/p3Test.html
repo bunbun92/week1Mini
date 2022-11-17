@@ -19,7 +19,7 @@
         let cnt = 0;
 
         $(document).ready(function () {
-
+            getAllComments();
             // showCurrentTime();
         });
 
@@ -42,23 +42,17 @@
 
         }
 
-        function deleteCommentZone(){
+        function reloadArea() {
             $('#showComments').load(location.href + ' #showComments');
             $('#comment').load(location.href + ' #comment');
             $('#comment').value = null;
-        }
-
-        function reloadArea() {
-
-            deleteCommentZone();
-            // setInterval(getAllComments(),200);
             getAllComments();
         }
 
         function getAllComments(){
             $.ajax({
                 type: "GET",
-                url: "/p3_comment",
+                url: "/comment",
                 data: {},
                 success: function (response) {
                     console.log(response['allComments'])
@@ -96,14 +90,12 @@
             })
         }
 
+        function getAComment(num){
+
+
+        }
+
         function saveComment(){
-
-            if(cnt < talkingBundleList.length){
-
-                alert('대화가 모두 끝난 후 전송해주세요.');
-
-                return 0;
-            }
 
             let comment = $('#comment').val()
 
@@ -113,15 +105,15 @@
 
             $.ajax({
                 type: "POST",
-                url: "/p3_comment",
+                url: "/comment",
                 data: {comment_give: comment, hour_give: hour, minute_give: minute},
                 success: function (response) {
 
                     console.log(comment);
                     console.log(response['msg']);
 
-                    //window.location.reload();
-                    reloadArea();
+                    window.location.reload();
+                    // reloadArea();
 
 
                 }
@@ -132,18 +124,16 @@
 
             $.ajax({
                 type: "POST",
-                url: "/p3_comment/delete",
+                url: "/comment/delete",
                 data: {num_give: num},
                 success: function (response) {
                     console.log(response['msg']);
 
-                    //window.location.reload();
-                     reloadArea()
+                    window.location.reload();
+                    // reloadArea()
                 }
             })
         }
-
-
 
 
         let talkingBundleList = [];
@@ -445,9 +435,7 @@
                                 </span>
                                 <br>
                             </div>
-
-
-
+<!!split1>
 
                             <div class="right" id="showComments">
 
@@ -460,13 +448,6 @@
 
         }
         makeString();
-
-        function checkNextButtonEnd() {
-            if (cnt >= talkingBundleList.length ){
-                document.getElementById("nextButton").setAttribute("class", "nextButtonEnd");
-                document.getElementById("skipButton").setAttribute("class", "nextButtonEnd");
-            }
-        }
 
         function showNextTalk(){
 
@@ -492,11 +473,6 @@
             console.log('cnt= '+ cnt);
             showCurrentTime();
 
-            if(cnt == talkingBundleList.length){
-                getAllComments();
-                checkNextButtonEnd();
-            }
-
 
         }
 
@@ -511,7 +487,7 @@
             for(; cnt < talkingBundleList.length; cnt++){
 
                 tempHtml = talkingBundleList[cnt].split("<!!split2>");
-
+                console.log('tempHtml.length = ' + tempHtml.length);
                 for (let i = 0; i < tempHtml.length; i++) {
 
                     console.log('i = ' + i);
@@ -519,7 +495,7 @@
 
                 }
 
-
+                console.log('cnt= ' + cnt);
 
             }
 
@@ -527,11 +503,19 @@
                 showCurrentTime();
             }
 
-            // reloadArea();
-            getAllComments();
-            checkNextButtonEnd();
 
         }
+
+        // function goDown(){
+        //     $("#window").scrollTop($("window")[0].scrollHeight);
+        // }
+
+
+
+        // for (let i=0; i)
+
+
+
 
         function showPastTime(){
         }
@@ -698,10 +682,6 @@
             height : 2em;
         }
 
-        .buttonSend:hover{
-            filter: opacity(0.8) drop-shadow(0 0 0 black);
-        }
-
         .delete{
             padding-top : -0.2em;
             margin-top : -0.2em;
@@ -726,27 +706,6 @@
             font-size : 0.8em;
         }
 
-        .nextButton{
-            width : 20px;
-            height : 20px;
-            margin-right : 5px;
-
-            filter: opacity(0.3) drop-shadow(0 0 0 grey);
-        }
-
-        .nextButton:hover{
-            filter: opacity(0.7) drop-shadow(0 0 0 black);
-            cursor: pointer;
-        }
-
-        .nextButtonEnd{
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-
-            filter: opacity(0.2) drop-shadow(0 0 0 grey);
-        }
-
 
 
     </style>
@@ -765,6 +724,9 @@
                 <br><br>
                   신승훈
             </span>
+            <button onclick="showNextTalk()">오매</button>
+            <button onclick="showAllTalk()">아래로 버튼 </button>
+            <button onclick="test2()">테스트2</button>
         </div>
 
         <br>
@@ -787,7 +749,10 @@
 
 
 
+        <div class="right" id="showComments">
 
+
+        </div>
 
 
     </div>
@@ -798,8 +763,6 @@
         </span>
         <br>
         <span>
-            <img src="/static/next.png" class="nextButton" id="nextButton" onclick="showNextTalk()">
-            <img src="/static/skip.png" class="nextButton" id="skipButton" onclick="showAllTalk()">
             <button class="buttonSend" onclick = "saveComment()">
                 전송
             </button>

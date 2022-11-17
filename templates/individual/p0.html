@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" type="image/png" href="../static/favicon.png" />
+    <script src="https://kit.fontawesome.com/955d830b21.js" crossorigin="anonymous"></script>
+    <script src="main.js" defer></script>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <style>
+
+      /* Global */
+
+:root {
+  /* Color */
+  --color-white: #ffffff;
+  --color-light-white: #eeeeee;
+  --color-dark-white: #bdbdbd;
+  --color-pink: #fe918d;
+  --color-dark-pink: #ff6863;
+  --color-dark-grey: #4d4d4d;
+  --color-grey: #616161;
+  --color-light-grey: #7c7979;
+  --color-blue: #73aace;
+  --color-yellow: #fff7d1;
+  --color-orange: #feb546;
+  --color-black: #000000;
+
+  /* Font size */
+  --font-large: 48px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+
+  /* Size */
+  --size--border-radius: 4px;
+
+  /* Animation */
+  --animation-duration: 300ms;
+}
+
+/* Universal tags */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+/* Typography */
+h1 {
+  font-size: var(--font-large);
+  font-weight: var(--weight-bold);
+  color: var(--color-black);
+  margin: 16px 0px;
+}
+
+h2 {
+  font-size: (var(--font-medium));
+  font-weight: (--weight-semi-bold);
+  color: var(--color-black);
+  margin: 8px 0;
+}
+
+h3 {
+  font-size: var(--font-small);
+  font-weight: var(--font-regular);
+  color: var(--color-black);
+  margin: 8px 0;
+}
+
+p {
+  font-size: var(--font-regular);
+  font-weight: var(--font-regular);
+  color: var(--color-black);
+  margin: 8px 0;
+}
+
+/* Home */
+#home {
+  background: url("../../static/homebackground.png") center/cover no-repeat;
+  padding: 40px;
+  padding-top: 120px;
+  text-align: center;
+}
+
+.home__avatar {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+}
+
+.home_title,
+.home_description {
+  color: var(--color-white);
+  margin-top: 30px;
+  font-size: xx-large;
+}
+
+.home_contact {
+  font-size: var(--font-regular);
+  font-weight: var(--weight-bold);
+  margin: 24px;
+  padding: 8px 12px;
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+  border-radius: var(--size--border-radius);
+}
+
+/* Section common */
+.section {
+  text-align: center;
+  padding: 50px;
+  margin: auto;
+}
+
+.section_container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* About */
+.about_majors {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 80px 0;
+}
+
+.major_icon {
+  width: 170px;
+  height: 170px;
+  font-size: 70px;
+  line-height: 170px;
+  margin: auto;
+  border: 1px solid var(--color-blue);
+  border-radius: 50%;
+  margin-bottom: 16px;
+  color: var(--color-blue);
+}
+
+.major_icon i {
+  transition: all var(--animation-duration) ease;
+}
+
+.major_icon i:hover {
+  color: var(--color-pink);
+  transform: rotate(-30deg) scale(1.1);
+}
+
+.major_title,
+.major_description {
+  color: var(--color-dark-grey);
+}
+
+.major__description {
+  font-size: var(--font-small);
+}
+
+/* Skills */
+#skills {
+  background-color: var(--color-yellow);
+}
+
+.skillset {
+  display: flex;
+  background-color: var(--color-light-grey);
+  margin: 20px 0;
+  color: var(--color-light-white);
+}
+
+.skillset_title {
+  color: var(--color-white);
+  margin: 20px 0;
+}
+
+.skillset_left {
+  flex-basis: 60%;
+  background-color: var(--color-dark-grey);
+  padding: 20px 40px;
+}
+
+.skill_description {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skill_bar {
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-grey);
+}
+
+.skill_value {
+  width: 70%;
+  height: 3px;
+  background-color: orange;
+}
+
+.skill {
+  margin-bottom: 32px;
+}
+
+.skillset_right {
+  flex-basis: 40%;
+}
+
+.tools {
+  background-color: var(--color-grey);
+}
+
+.tools,
+.etc {
+  padding: 20px;
+}
+
+/* work */
+
+.work_categories {
+  margin: 40px;
+}
+
+.category_btn {
+  border: 1px solid var(--color-dark-white);
+  border-radius: var(--size-border-radius);
+  font-size: var(--font-regular);
+  padding: 8px 48px;
+}
+
+.category_btn.active,
+.category_btn:hover {
+  background-color: var(--color-pink);
+  color: var(--color-white);
+}
+
+.category_btn.active .category_count,
+.category_btn:hover .category_count {
+  opacity: 1;
+  top: 0;
+}
+
+.category_count {
+  background-color: var(--color-orange);
+  border-radius: 50%;
+  color: var(--color-white);
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+  position: relative;
+  top: -20px;
+  left: 4px;
+  opacity: 0;
+  transition: all var(--animation-duration) ease-in;
+}
+
+.work_projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.project {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 250px;
+  margin: 2px;
+  background-color: var(--color-light-white);
+}
+
+.project_img {
+  max-width: 100%;
+  max-height: 100%;
+  align-self: center;
+}
+
+.project_description {
+  position: absolute;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--animation-duration) ease-in;
+}
+
+.project:hover .project_description {
+  opacity: 0.8;
+  transform: translateY(0px);
+}
+
+.project_description h3 {
+  color: var(--color-white);
+}
+
+.project_description h3:after {
+  content: "";
+  display: block;
+  position: relative;
+  left: 50%;
+  width: 25px;
+  height: 2px;
+  margin-left: -12px;
+  margin-top: 8px;
+  background-color: var(--color-dark-white);
+}
+
+/*Guestbook*/
+
+.author {
+  margin-top: 20px;
+}
+
+/* Testimonial */
+#testimonials {
+  background-color: var(--color-light-white);
+}
+
+.testimonials {
+  margin: 40px;
+}
+
+.testimonial {
+  display: flex;
+  margin: 32px;
+}
+
+.testimonial_avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 12px;
+}
+
+.testimonial_avatar:nth-child(odd) {
+  margin-right: 40px;
+}
+
+.testimonial_avatar:nth-child(even) {
+  margin-left: 40px;
+}
+
+.testimonial_speech-bubble {
+  padding: 18px;
+  background-color: var(--color-white);
+  border-radius: var(--size--border-radius);
+}
+
+.testimonial_speech-bubble p {
+  color: var(--color-light-grey);
+}
+
+.testimonial_speech-bubble a {
+  color: var(--color-pink);
+}
+
+/*Form*/
+
+.review {
+  padding-top: 50px;
+}
+
+.formContent {
+  padding-top: 20px;
+}
+
+/* Contact */
+#contact {
+  background-color: var(--color-pink);
+}
+
+.contact_title,
+.contact_email,
+.contact_rights {
+  color: var(--color-white);
+}
+
+.contact_title {
+  margin: 32px 0;
+}
+
+.contact_links {
+  font-size: var(--font-large);
+  margin: 24px 0;
+}
+
+.contact_links i:hover {
+  transform: scale(1.1);
+  color: var(--color-yellow);
+  transition: all var(--animation-duration) ease-in;
+}
+
+/* For below 768px screen width */
+@media screen and (max-width: 768px) {
+  .navbar_toggle-btn {
+    display: block;
+  }
+  #navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar_menu {
+    flex-direction: colomn;
+    text-align: center;
+    width: 100%;
+  }
+
+  .about_majors {
+    flex-direction: column;
+  }
+
+  .major {
+    margin-bottom: 38px;
+  }
+
+  .skillset {
+    flex-direction: column;
+  }
+
+  .project {
+    flex-grow: 1;
+  }
+
+  .testimonial_avatar {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
+    </style>
+
+     <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+
+
+            $(document).ready(function () {
+                showGuestBook();
+            });
+
+
+            function makeGuestBook() {
+
+                let name = $('#name').val()
+                let content = $('#content').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/p0_guestBook",
+                    data: {
+                        name_give:name,
+                        content_give:content
+                    },
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload()
+                    }
+                });
+            }
+
+            function deleteComment(name) {
+              $.ajax({
+                type: "POST",
+                url: "/p0_delete",
+                data: {name_give: name},
+                success: function (response) {
+                  alert(response['msg']);
+                  window.location.reload()
+
+                }
+              })
+            }
+
+            function showGuestBook() {
+                $.ajax({
+                    type: "GET",
+                    url: "/p0_guestBook",
+                    data: {},
+                    success: function (response) {
+                        let guestBook = response['all_contents']
+                        console.log(guestBook)
+                    for(let i = 0; i < guestBook.length; i++){
+                      let guestname = guestBook[i]['name']
+                      let guestcontent = guestBook[i]['content']
+
+                      let cards = `
+                                   <div class ="author">
+                                        <h2>From ${guestname}</h2>
+                                         <h1>${guestcontent}<h1>
+                                         <button onclick="deleteComment('${guestname}')" type="button" class="btn btn-outline-danger">삭제</button>
+                                    </div>
+                      `
+                      $('#guestcards').append(cards)
+                    }
+                    }
+                })
+            }
+        </script>
+
+    <!-- Home -->
+    <section id="home">
+      <img
+        src="../../static/profile%20pic.jpg"
+        alt="Jeremy's profile photo"
+        class="home__avatar"
+        />
+      <h1 class="home_title">
+        Node Express붐은 온다!</br>
+        백엔드개발자 강성주입니다
+      </h1>
+      <button class="home_contact">Contact Me</button>
+    </section>
+  <!-- about -->
+  <section id="about" class="section section_container">
+    <h1>About me</h1>
+    <p>(희망사항입니다 ^^)</p>
+    <div class="about_majors">
+      <div class="major">
+        <div class="major_icon">
+          <i class="fab fa-html5"></i>
+        </div>
+        <h2 class="major_title">Front-end</h2>
+        <div class="major_description">
+          HTML, CSS, Javascript,
+          <br />React,TypeScript,
+        </div>
+      </div>
+      <div class="major">
+        <div class="major_icon">
+          <i class="fas fa-server"></i>
+        </div>
+        <h2 class="major_title">Back-end</h2>
+        <p class="major_description">
+          Javascript, NodeJS, PostgreSQL
+          Typescript, Redis, Docker
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- skills -->
+  <section id="skills" class="section">
+    <div class="section_container">
+      <h2>카페 자영업과 직장인을 거쳐 개발자에 안착하려 합니다</h2>
+      <h2> ISTP 그리고 다방면에 호기심이 많습니다</h2>
+      <h2>이제는 개발자가 되려 합니다</h2>
+      <h2>팔랑귀 수준으로 팀원의 의견을 경청합니다</h2>
+      <h2>토끼와 거북이, 그 둘은 함께 동시에 골인선을 통과해야 합니다</h2>
+    </div>
+    </section>
+  <!-- Form -->
+ <section id="form" class="section">
+    <div class="section_container">
+      <div class="mb-3">
+        <label for="name" class="form-label">이름을 입력하세요</label>
+        <input type="email" class="form-control" id="name" placeholder="별명도 가능!">
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label formContent" >방명록</label>
+        <textarea class="form-control" id="content" rows="3" placeholder="200자 이내"></textarea>
+      </div>
+    </div>
+   <div class="review">
+      <button onclick="makeGuestBook()" type="button" class="btn btn-primary">방명록 등록</button>
+   </div>
+ </section>
+  <!--Guestbook -->
+  <section id="testimonials" class="section">
+    <div class="section_container">
+    <h1>Guest Book</h1>
+    <div class="testimonials">
+        <div class="testimonial_speech-bubble" id="guestcards">
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- contact -->
+  <section id="contact" class="section">
+    <h1 class="contact_title">Let's talk</h1>
+    <h2 class="contact_email">castleownerkang@gmail.com</h2>
+    <h2 class="contact_email">https://castellan.tistory.com/</h2>
+    <div class="contact_links">
+      <a href="https://github.com/castellanriver">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <p class="contact_rights">2022 Jeremy Kang</p>
+  </section>
+</body>
+</html>
