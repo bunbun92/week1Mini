@@ -13,7 +13,7 @@
         crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
-    
+
 
     <title>누구세요? 변준혁</title>
     <style>
@@ -98,13 +98,50 @@
             background-color: #000;
             font-size: 40px;
         }
+
         .mypost {
-            margin-left: 25%;
+            margin-left: 10%;
             margin-top: 50px;
         }
+
         .mycards {
-            margin-left: 25%;
+            margin-right: 7%;
             margin-top: 50px;
+            transform: scaleX(-1);
+        }
+        .delete{
+            padding-top : -0.2em;
+            margin-top : -0.2em;
+            text-align: center;
+            font-size : 1em;
+            color : rgb(250, 0, 0);
+            background: rgb(0,0,0,0);
+            border-radius: 30%;
+            border: none;
+            width : 1.5em;
+            height : 1.5em;
+            font-weight: bold;
+        }
+        .card {
+            position: relative;
+            margin: 20px;
+            padding: 20px;
+            width: fit-content;
+            height: fit-content;
+            color: #FFF;
+            border-radius: 10px;
+            background-color: #000;
+            font-size: 25px;
+        }
+        .card:after {
+            content: "";
+            position: absolute;
+            top: 21px;
+            right: 1000px;
+            left: -30px;
+            border-right: 30px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
         }
     </style>
     <script>
@@ -117,7 +154,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/p2_comment',
-                data: {comment_give:comment},
+                data: { comment_give: comment },
                 success: function (response) {
                     alert(response['msg'])
                     window.location.reload()
@@ -133,20 +170,30 @@
                 data: {},
                 success: function (response) {
                     let rows = response['comment']
-                    for (let i =0; i < rows.length; i++) {
+                    for (let i = 0; i < rows.length; i++) {
                         let comment = rows[i]['comment']
+                        let num = rows[i]['num']
 
-                        let temp_html = `<div class="card" style="width: 1000px">
-                                            <div class="card-body">
-                                                <blockquote class="blockquote mb-0">
-                                                    <p>${comment}</p>
-                                                </blockquote>
-                                            </div>
-                                        </div>`
+                        let temp_html = `<div class="card">   
+                                             <span style="transform: scaleX(-1);">${comment}</span>
+                                             <button type="button" class="delete" onclick="delComment(${num})">x</button>
+                                         </div>`
                         $('#comment-list').append(temp_html)
                     }
                 }
             });
+        }
+        function delComment(num) {
+
+            $.ajax({
+                type: "POST",
+                url: "/p2_delComment",
+                data: { num_give: num },
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload();
+                }
+            })
         }
     </script>
 
@@ -232,10 +279,12 @@
 
     <div class="mypost">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" placeholder="Leave a comment here" id="comment" style="width: 1000px">
+            <input type="text" class="form-control" placeholder="Leave a comment here" id="comment"
+                style="width: 1000px">
             <label for="floatingInput">comment</label>
         </div>
         <button onclick="save_comment()" type="button" class="btn btn-dark">댓글 남기기</button>
     </div>
     <div class="mycards" id="comment-list"></div>
+
 </html>
