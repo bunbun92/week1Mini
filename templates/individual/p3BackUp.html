@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>승훈인데요</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            getAllComments();
+            // showCurrentTime();
+        });
+
+        function reloadArea() {
+
+            $('#showComments').load(location.href + ' #showComments');
+            $('#comment').load(location.href + ' #comment');
+            $('#comment').value = null;
+            getAllComments();
+        }
+
+
+        function getAllComments(){
+            $.ajax({
+                type: "GET",
+                url: "/comment",
+                data: {},
+                success: function (response) {
+                    console.log(response['allComments'])
+                    console.log(response['msg'])
+
+
+                    let rows = response['allComments'];
+                    let tempHtml =``;
+
+                    for(let i = 0; i < rows.length; i++){
+                        let comment = rows[i]['comment'];
+                        let hour = (rows[i]['hour']).toString().padStart(2, "0");
+                        let minute = rows[i]['minute'].toString().padStart(2, "0");
+                        let num = rows[i]['num'];
+
+                        if(num == 0){
+                            tempHtml = ``;
+                        }else{
+                            tempHtml = `<br>`;
+                        }
+
+                        tempHtml += `       <span class="pastTime">
+                                                ${hour}:${minute}
+                                            </span>
+                                            <span class="rightSpan">
+                                                ${comment}
+                                            </span>
+                                            <button type="button" class="delete" onclick="deleteComment(${num})">x</button>
+                                    `;
+
+                        $('#showComments').append(tempHtml);
+
+                    }
+
+
+
+                }
+            })
+        }
+
+
+        function getAComment(num){
+
+        }
+
+        function saveComment(){
+
+            let comment = $('#comment').val()
+
+            let date = new Date();
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+
+            $.ajax({
+                type: "POST",
+                url: "/comment",
+                data: {comment_give: comment, hour_give: hour, minute_give: minute},
+                success: function (response) {
+
+                    console.log(comment);
+                    console.log(response['msg']);
+
+                    window.location.reload();
+                    // reloadArea();
+
+
+                }
+            })
+        }
+
+
+         function deleteComment(num){
+
+            $.ajax({
+                type: "POST",
+                url: "/comment/delete",
+                data: {num_give: num},
+                success: function (response) {
+                    console.log(response['msg']);
+
+                    window.location.reload();
+                    // reloadArea()
+                }
+            })
+        }
+
+
+
+
+
+
+        //현재시간 출력기능 미사용
+        // function showCurrentTime(){
+        //
+        //     let date = new Date();
+        //     let tempHtml = ``;
+        //     let hour = date.getHours().toString().padStart(2, "0");
+        //     let minute = date.getMinutes().toString().padStart(2, "0");
+        //
+        //
+        //     tempHtml = `${hour}:${minute}`;
+        //     $(`.currentTime`).append(tempHtml);
+        //
+        // }
+
+        function showPastTime(){
+
+
+        }
+
+    </script>
+
+
+    <style>
+        span {}
+
+        div {}
+
+        .window{
+
+            background : lightsteelblue;
+            /*width : 800px;*/
+            width : 90%;
+            height : 90%;
+
+
+            margin : auto;
+
+        }
+
+        .windowHead{
+            background: lightsteelblue;
+            height: 100px;
+            width : 90%;
+
+            position: fixed;
+            top: 0;
+            z-index: 99;
+        }
+
+        .left{
+            text-align : left;
+            padding : 5px;
+        }
+
+        .leftSpan{
+            background : white;
+
+            margin-top: 5px;
+            margin-left : 70px;
+            margin-bottom: 5px;
+            padding : 5px;
+            display : inline-block;
+            max-width : 380px;
+            border-radius: 5px 5px 5px 5px;
+
+        }
+
+        .right {
+            text-align: right;
+            padding: 5px;
+
+        }
+
+        .rightSpan {
+            background: yellow;
+
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 5px;
+            display : inline-block;
+            max-width: 380px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+        .name{
+            margin-top : 2px;
+            font-size: 0.9em;
+            margin-left : 70px;
+            display : inline-block;
+            font-weight: bold;
+        }
+
+        .uploadImage{
+            max-width:370px;
+            max-height: 600px;
+        }
+
+        .invisibleSpace{
+            border-radius: 40%;
+            overflow: hidden;
+            margin : 5px;
+            width : 155px;
+        }
+
+        .inner {
+            margin : auto;
+            background : pink;
+        }
+
+        .listDiv{
+            padding : 10px
+        }
+
+        .profileImage{
+
+            border-radius: 40%;
+            overflow: hidden;
+            margin : 5px;
+            width : 55px;
+            height : 55px;
+            float : left;
+
+            position : absolute;
+
+        }
+
+        .mainImage{
+            border-radius: 40%;
+            overflow: hidden;
+
+            width : 55px;
+            height : 55px;
+            margin-left : 10px;
+            margin-top : 30px;
+            float : left;
+            display : inline-block;
+        }
+
+        .mainName{
+            font-weight: bold;
+            margin-top: -14px;
+            font-size: 18px;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .test{
+            display : inline-block;
+            transform : translate(0, 30%);
+        }
+
+
+
+        .msg{
+
+        }
+
+        .textArea{
+            width : 90%;
+            height : 90%;
+            margin : auto;
+            background: white;
+            text-align: right;
+        }
+
+        .textBox{
+            border:none;
+            width : 100%;
+            height : 6em;
+        }
+
+        .buttonSend{
+            margin : 2px;
+            font-size : 0.9em;
+            color : darkgrey;
+            border : none;
+            width : 3em;
+            height : 2em;
+        }
+
+        .delete{
+            padding-top : -0.2em;
+            margin-top : -0.2em;
+            text-align: center;
+            font-size : 1em;
+            color : white;
+            background: red;
+            border-radius: 30%;
+            border: none;
+            width : 1.5em;
+            height : 1.5em;
+            font-weight: bold;
+        }
+
+        .currentTime{
+            color : grey;
+            font-size : 0.8em;
+        }
+
+        .pastTime{
+            color : grey;
+            font-size : 0.8em;
+        }
+
+
+
+    </style>
+</head>
+<body style = "background : lightgrey;">
+
+
+
+    <div class = "window">
+
+
+
+        <div class="windowHead">
+            <img class = "mainImage" src="../../static/3.png" >
+            <span class="mainName">
+                <br><br>
+                  신승훈
+            </span>
+        </div>
+
+        <br>
+
+
+
+
+        <div class="left">
+            <br><br><br>
+            <img class = "profileImage" src="../../static/3.png" >
+            <span class ="name">
+                신승훈
+            </span>
+            <br>
+            <span class="leftSpan">
+                안녕하세요!
+            </span>
+            <span class = "currentTime">
+                09:08
+            </span>
+        </div>
+
+
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:08
+            </span>
+            <span class="rightSpan">
+                누구세요?
+            </span>
+
+        </div>
+
+
+
+
+        <div class="left">
+            <img class = "profileImage" src="../../static/3.png" >
+            <span class ="name">
+                신승훈
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                <img class = "uploadImage" src = "../../static/pic0.jpg">
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                저는 승훈인데요!
+            </span>
+            <span class = "currentTime">
+                09:09
+            </span>
+            <br>
+        </div>
+
+
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:09
+            </span>
+                <span class="rightSpan">
+                    어떤분이신가요?
+                </span>
+        </div>
+
+
+
+
+        <div class="left">
+            <img class = "profileImage" src="../../static/3.png" >
+            <span class ="name">
+                신승훈
+            </span>
+            <br>
+
+
+
+            <span class="leftSpan">
+                저는 관종이었어요
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                <img class = "uploadImage" src = "../../static/pic1.jpg">
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                4~5년 전 인스타에 ootd를 올리며
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                 좋아요에 환장하던 청년은
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                <img class="uploadImage" src="../../static/pic2.jpg">
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                시간이 흘러
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                 힙한옷보단 양복이 잘어울리는 아재가 되었습니다....
+            </span>
+            <span class = "currentTime">
+                09:10
+            </span>
+            <br>
+
+        </div>
+
+
+
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:13
+            </span>
+                <span class="rightSpan">
+                    MBTI는요?
+                </span>
+        </div>
+
+
+        <div class="left">
+            <img class="profileImage" src="../../static/3.png">
+            <span class="name">
+                신승훈
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                <img class="uploadImage" src="../../static/pic3.png">
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                INTP 입니다!
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                 예전엔 ENTP였는데 어느새 INTP가 되었네요
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                나름 사회화된 INTP라
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                 논리적으로 물어뜯지 않으니 피하지 않으셔도 됩니다
+
+            </span>
+            <span class = "currentTime">
+                09:17
+            </span>
+            <br>
+
+        </div>
+
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:17
+            </span>
+                <span class="rightSpan">
+                    승훈님의 장점은?!
+                </span>
+        </div>
+
+
+
+        <div class="left">
+            <img class="profileImage" src="../../static/3.png">
+            <span class="name">
+                신승훈
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                긍정적인 성격이 장점입니다!
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                <img class="uploadImage" src="../../static/pic4.jpg">
+            </span>
+            <br>
+
+
+
+
+            <span class="leftSpan">
+                 진짜 객관적으로 긍정적입니다!!!!!
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                믿으세요!
+            </span>
+            <span class = "currentTime">
+                09:18
+            </span>
+            <br>
+
+
+        </div>
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:18
+            </span>
+                <span class="rightSpan">
+                    협업할 때는 어떤 스타일이신가요?
+                </span>
+        </div>
+
+
+        <div class="left">
+            <img class="profileImage" src="../../static/3.png">
+            <span class="name">
+                신승훈
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                저는 협업할 때 좋은 의견에 맞추어 따르는 스타일입니다!
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                 그리고 저는 팀 내에서 최소한
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                1인분은 하지않으면
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                 마음이 불편해지기 때문에 제 역할은 다 하는 성격입니다
+            </span>
+            <span class = "currentTime">
+                09:18
+            </span>
+            <br>
+
+
+        </div>
+
+
+        <div class="right">
+            <span class = "currentTime">
+                09:19
+            </span>
+                <span class="rightSpan">
+                    그렇군요!!
+                </span>
+        </div>
+
+
+        <div class="left">
+            <img class="profileImage" src="../../static/3.png">
+            <span class="name">
+                신승훈
+            </span>
+            <br>
+
+            <span class="leftSpan">
+                네!!!!
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                 수료하는 그날까지
+            </span>
+            <br>
+
+
+            <span class="leftSpan">
+                열심히 달려보겠습니다!
+            </span>
+            <span class = "currentTime">
+                09:19
+            </span>
+            <br>
+
+
+            <div class="right" id="showComments">
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <div class = "textArea">
+        <span>
+            <input type="text" class ="textBox" id="comment">
+        </span>
+        <br>
+        <span>
+            <button class="buttonSend" onclick = "saveComment()">
+                전송
+            </button>
+        </span>
+    </div>
+
+    <p>
+
+    </p>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+

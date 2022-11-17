@@ -16,10 +16,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
+        let cnt = 0;
+
         $(document).ready(function () {
             getAllComments();
             // showCurrentTime();
         });
+
+        function showCurrentTime(){
+
+            let date = new Date();
+            let tempHtml = ``;
+            let hour = date.getHours().toString().padStart(2, "0");
+            let minute = date.getMinutes().toString().padStart(2, "0");
+
+
+            tempHtml = `${hour}:${minute}`;
+
+            $(`.currentTime`).text(tempHtml);
+
+            if(cnt == 1){
+                document.getElementById('time' + (cnt-1)).setAttribute("class", "pastTime");
+            }
+            document.getElementById('time' + cnt).setAttribute("class", "pastTime");
+
+        }
 
         function reloadArea() {
             $('#showComments').load(location.href + ' #showComments');
@@ -27,7 +48,6 @@
             $('#comment').value = null;
             getAllComments();
         }
-
 
         function getAllComments(){
             $.ajax({
@@ -116,40 +136,386 @@
         }
 
 
-        const talkingList = [];
-        function insertTalkingBundleToList(){
+        let talkingBundleList = [];
+        let check = false;
 
-            const talkingBundle = '베리 베리 베리 '.split(' ');
+        function makeString(){
+            let tempHtml = `
 
-            talkingBundle[0] = ``;
+
+                            <div class="right">
+                                <span class = "currentTime" id="time1">
+                                    09:08
+                                </span>
+                                <span class="rightSpan">
+                                    누구세요?
+                                </span>
+
+                            </div>
+<!!split1>
+
+
+
+                            <div class="left">
+                                <img class = "profileImage" src="../../static/3.png" >
+                                <span class ="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+                                <span class="leftSpan">
+                                    <img class = "uploadImage" src = "../../static/pic0.jpg">
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                    저는 승훈인데요!
+                                </span>
+                                <span class = "currentTime" id="time2">
+                                    09:09
+                                </span>
+                                <br>
+                            </div>
+<!!split1>
+
+
+
+                            <div class="right">
+                                <span class = "currentTime" id="time3">
+                                    09:09
+                                </span>
+                                    <span class="rightSpan">
+                                        어떤분이신가요?
+                                    </span>
+                            </div>
+<!!split1>
+
+
+
+                            <div class="left">
+                                <img class = "profileImage" src="../../static/3.png" >
+                                <span class ="name" >
+                                    신승훈
+                                </span>
+                                <br>
+
+
+
+                                <span class="leftSpan">
+                                    저는 관종이었어요
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    <img class = "uploadImage" src = "../../static/pic1.jpg">
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    4~5년 전 인스타에 ootd를 올리며
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                     좋아요에 환장하던 청년은
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    <img class="uploadImage" src="../../static/pic2.jpg">
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                    시간이 흘러
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                     힙한옷보단 양복이 잘어울리는 아재가 되었습니다....
+                                </span>
+                                <span class = "currentTime" id="time4">
+                                    09:10
+                                </span>
+                                <br>
+
+                            </div>
+<!!split1>
+
+
+
+
+                            <div class="right">
+                                <span class = "currentTime" id="time5">
+                                    09:13
+                                </span>
+                                    <span class="rightSpan">
+                                        MBTI는요?
+                                    </span>
+                            </div>
+<!!split1>
+
+                            <div class="left">
+                                <img class="profileImage" src="../../static/3.png">
+                                <span class="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+
+                                <span class="leftSpan">
+                                    <img class="uploadImage" src="../../static/pic3.png">
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    INTP 입니다!
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                     예전엔 ENTP였는데 어느새 INTP가 되었네요
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    나름 사회화된 INTP라
+                                </span>
+                                <br>
+    <!!split2>
+                                <span class="leftSpan">
+                                     논리적으로 물어뜯지 않으니 피하지 않으셔도 됩니다
+
+                                </span>
+                                <span class = "currentTime" id="time6">
+                                    09:17
+                                </span>
+                                <br>
+
+                            </div>
+<!!split1>
+
+
+                            <div class="right">
+                                <span class = "currentTime" id="time7">
+                                    09:17
+                                </span>
+                                    <span class="rightSpan">
+                                        승훈님의 장점은?!
+                                    </span>
+                            </div>
+<!!split1>
+
+
+                            <div class="left">
+                                <img class="profileImage" src="../../static/3.png">
+                                <span class="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+                                <span class="leftSpan">
+                                    긍정적인 성격이 장점입니다!
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    <img class="uploadImage" src="../../static/pic4.jpg">
+                                </span>
+                                <br>
+    <!!split2>
+
+
+
+                                <span class="leftSpan">
+                                     진짜 객관적으로 긍정적입니다!!!!!
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    믿으세요!
+                                </span>
+                                <span class = "currentTime" id="time8">
+                                    09:18
+                                </span>
+                                <br>
+
+
+                            </div>
+<!!split1>
+
+                            <div class="right">
+                                <span class = "currentTime" id="time9">
+                                    09:18
+                                </span>
+                                    <span class="rightSpan">
+                                        협업할 때는 어떤 스타일이신가요?
+                                    </span>
+                            </div>
+<!!split1>
+
+                            <div class="left">
+                                <img class="profileImage" src="../../static/3.png">
+                                <span class="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+                                <span class="leftSpan">
+                                    저는 협업할 때 좋은 의견에 맞추어 따르는 스타일입니다!
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                     그리고 저는 팀 내에서 최소한
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    1인분은 하지않으면
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                     마음이 불편해지기 때문에 제 역할은 다 하는 성격입니다
+                                </span>
+                                <span class = "currentTime" id="time10">
+                                    09:18
+                                </span>
+                                <br>
+
+
+                            </div>
+<!!split1>
+
+                            <div class="right">
+                                <span class = "currentTime" id="time11">
+                                    09:19
+                                </span>
+                                    <span class="rightSpan">
+                                        그렇군요!!
+                                    </span>
+                            </div>
+<!!split1>
+
+                            <div class="left">
+                                <img class="profileImage" src="../../static/3.png">
+                                <span class="name">
+                                    신승훈
+                                </span>
+                                <br>
+
+                                <span class="leftSpan">
+                                    네!!!!
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                     수료하는 그날까지
+                                </span>
+                                <br>
+    <!!split2>
+
+                                <span class="leftSpan">
+                                    열심히 달려보겠습니다!
+                                </span>
+                                <span class = "currentTime" id="time12">
+                                    09:19
+                                </span>
+                                <br>
+                            </div>
+<!!split1>
+
+                            <div class="right" id="showComments">
+
+
+
+
+                            </div>`;
+
+            talkingBundleList = tempHtml.split("<!!split1>");
+
+        }
+        makeString();
+
+        function showNextTalk(){
+
+            if(cnt >= talkingBundleList.length){
+                return 0
+            }
+            if(check == false){
+                check = true;
+            }
+
+            let tempHtml = ``;
+            tempHtml = talkingBundleList[cnt].split("<!!split2>");
+            console.log('tempHtml.length = ' + tempHtml.length);
+            for(let i=0; i < tempHtml.length; i++){
+
+                console.log('i = ' + i);
+                 $('#testd').append(tempHtml[i]);
+
+
+            }
+
+            cnt++;
+            console.log('cnt= '+ cnt);
+            showCurrentTime();
+
+
         }
 
+        function showAllTalk(){
 
+             if(cnt >= talkingBundleList.length){
+                return 0
+            }
 
-        function getATalkingBubble(num){
+            let tempHtml = ``;
 
+            for(; cnt < talkingBundleList.length; cnt++){
+
+                tempHtml = talkingBundleList[cnt].split("<!!split2>");
+                console.log('tempHtml.length = ' + tempHtml.length);
+                for (let i = 0; i < tempHtml.length; i++) {
+
+                    console.log('i = ' + i);
+                    $('#testd').append(tempHtml[i]);
+
+                }
+
+                console.log('cnt= ' + cnt);
+
+            }
+
+            if(check == true){
+                showCurrentTime();
+            }
 
 
         }
 
-
-
-
-
-
-        //현재시간 출력기능 미사용
-        // function showCurrentTime(){
-        //
-        //     let date = new Date();
-        //     let tempHtml = ``;
-        //     let hour = date.getHours().toString().padStart(2, "0");
-        //     let minute = date.getMinutes().toString().padStart(2, "0");
-        //
-        //
-        //     tempHtml = `${hour}:${minute}`;
-        //     $(`.currentTime`).append(tempHtml);
-        //
+        // function goDown(){
+        //     $("#window").scrollTop($("window")[0].scrollHeight);
         // }
+
+
+
+        // for (let i=0; i)
+
+
+
 
         function showPastTime(){
         }
@@ -167,7 +533,7 @@
             background : lightsteelblue;
             /*width : 800px;*/
             width : 90%;
-            height : 90%;
+            max-height : 90%;
 
 
             margin : auto;
@@ -348,7 +714,7 @@
 
 
 
-    <div class = "window">
+    <div class = "window" id="testd">
 
 
 
@@ -358,331 +724,32 @@
                 <br><br>
                   신승훈
             </span>
+            <button onclick="showNextTalk()">오매</button>
+            <button onclick="showAllTalk()">아래로 버튼 </button>
+            <button onclick="test2()">테스트2</button>
         </div>
 
         <br>
 
-
-
-
         <div class="left">
-            <img class = "profileImage" src="../../static/3.png" >
-            <span class ="name">
-                신승훈
-            </span>
-            <br>
-            <span class="leftSpan">
-                안녕하세요!
-            </span>
-            <span class = "currentTime">
-                09:08
-            </span>
-        </div>
-
-
-
-
-        <div class="right">
-            <span class = "currentTime">
-                09:08
-            </span>
-            <span class="rightSpan">
-                누구세요?
-            </span>
-
-        </div>
-
-
-
-
-        <div class="left">
-            <img class = "profileImage" src="../../static/3.png" >
-            <span class ="name">
-                신승훈
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                <img class = "uploadImage" src = "../../static/pic0.jpg">
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                저는 승훈인데요!
-            </span>
-            <span class = "currentTime">
-                09:09
-            </span>
-            <br>
-        </div>
-
-
-
-
-        <div class="right">
-            <span class = "currentTime">
-                09:09
-            </span>
-                <span class="rightSpan">
-                    어떤분이신가요?
-                </span>
-        </div>
-
-
-
-
-        <div class="left">
-            <img class = "profileImage" src="../../static/3.png" >
-            <span class ="name">
-                신승훈
-            </span>
-            <br>
-
-
-
-            <span class="leftSpan">
-                저는 관종이었어요
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                <img class = "uploadImage" src = "../../static/pic1.jpg">
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                4~5년 전 인스타에 ootd를 올리며
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                 좋아요에 환장하던 청년은
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                <img class="uploadImage" src="../../static/pic2.jpg">
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                시간이 흘러
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                 힙한옷보단 양복이 잘어울리는 아재가 되었습니다....
-            </span>
-            <span class = "currentTime">
-                09:10
-            </span>
-            <br>
-
-        </div>
-
-
-
-
-
-        <div class="right">
-            <span class = "currentTime">
-                09:13
-            </span>
-                <span class="rightSpan">
-                    MBTI는요?
-                </span>
-        </div>
-
-
-        <div class="left">
+            <br><br><br>
             <img class="profileImage" src="../../static/3.png">
             <span class="name">
-                신승훈
-            </span>
+                                    신승훈
+                                </span>
             <br>
-
-
             <span class="leftSpan">
-                <img class="uploadImage" src="../../static/pic3.png">
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                INTP 입니다!
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                 예전엔 ENTP였는데 어느새 INTP가 되었네요
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                나름 사회화된 INTP라
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                 논리적으로 물어뜯지 않으니 피하지 않으셔도 됩니다
-
-            </span>
-            <span class = "currentTime">
-                09:17
-            </span>
-            <br>
-
+                                    안녕하세요!
+                                </span>
+            <span class="currentTime" id = "time0">
+                                    09:08
+                                </span>
         </div>
 
 
 
-        <div class="right">
-            <span class = "currentTime">
-                09:17
-            </span>
-                <span class="rightSpan">
-                    승훈님의 장점은?!
-                </span>
-        </div>
 
-
-
-        <div class="left">
-            <img class="profileImage" src="../../static/3.png">
-            <span class="name">
-                신승훈
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                긍정적인 성격이 장점입니다!
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                <img class="uploadImage" src="../../static/pic4.jpg">
-            </span>
-            <br>
-
-
-
-
-            <span class="leftSpan">
-                 진짜 객관적으로 긍정적입니다!!!!!
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                믿으세요!
-            </span>
-            <span class = "currentTime">
-                09:18
-            </span>
-            <br>
-
-
-        </div>
-
-
-        <div class="right">
-            <span class = "currentTime">
-                09:18
-            </span>
-                <span class="rightSpan">
-                    협업할 때는 어떤 스타일이신가요?
-                </span>
-        </div>
-
-
-        <div class="left">
-            <img class="profileImage" src="../../static/3.png">
-            <span class="name">
-                신승훈
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                저는 협업할 때 좋은 의견에 맞추어 따르는 스타일입니다!
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                 그리고 저는 팀 내에서 최소한
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                1인분은 하지않으면
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                 마음이 불편해지기 때문에 제 역할은 다 하는 성격입니다
-            </span>
-            <span class = "currentTime">
-                09:18
-            </span>
-            <br>
-
-
-        </div>
-
-
-        <div class="right">
-            <span class = "currentTime">
-                09:19
-            </span>
-                <span class="rightSpan">
-                    그렇군요!!
-                </span>
-        </div>
-
-
-        <div class="left">
-            <img class="profileImage" src="../../static/3.png">
-            <span class="name">
-                신승훈
-            </span>
-            <br>
-
-            <span class="leftSpan">
-                네!!!!
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                 수료하는 그날까지
-            </span>
-            <br>
-
-
-            <span class="leftSpan">
-                열심히 달려보겠습니다!
-            </span>
-            <span class = "currentTime">
-                09:19
-            </span>
-            <br>
-
-
-            <div class="right" id="showComments">
-
-
-
-
-            </div>
-
-
+        <div class="right" id="showComments">
 
 
         </div>
