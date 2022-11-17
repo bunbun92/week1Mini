@@ -99,8 +99,11 @@ def p4home():
 @app.route("/p2_comment", methods=["POST"])
 def p2_comment_post():
     comment_receive = request.form['comment_give']
+    comment_list = list(db.p2_comment.find({}, {'_id': False}));
+    count = len(comment_list) + 1
     doca = {
         'comment': comment_receive,
+        'num': count
     }
     db.p2_comment.insert_one(doca)
     return jsonify({'msg': '입력 완료!'})
@@ -110,6 +113,14 @@ def p2_comment_post():
 def p2_comment_get():
     comment_list = list(db.p2_comment.find({}, {'_id': False}))
     return jsonify({'comment': comment_list})
+
+@app.route('/p2_delComment', methods=['POST'])
+def p2_comment_delete():
+    num_receive = request.form['num_give']
+
+    db.p2_comment.delete_one({'num': int(num_receive)});
+
+    return jsonify({'result': 'success', 'msg': '삭제 완료!'})    
 
 
 @app.route('/p3_comment', methods=['GET'])
