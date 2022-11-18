@@ -2,10 +2,468 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>긍정 은정</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat_wrap {
+            width: 40%;
+            height: 100%;
+            margin: 0 auto;
+            font-size: 13px;
+        }
+
+        .chat_wrap .header {
+            font-size: 16px;
+            padding: 12px 0;
+            background: #2D663C;
+            color: white;
+            text-align: center;
+        }
+
+        .chat_wrap .introduceEJ ul {
+            padding: 0px;
+        }
+
+        .chat_wrap EJ {
+            text-align: left;
+        }
+
+        .chat_wrap .VS {
+            text-align: right;
+        }
+
+        .chat_wrap .chat ul li.right {
+            text-align: right;
+        }
+
+        .chat_wrap .chat {
+            padding-bottom: 80px;
+        }
+
+        .chat_wrap .chat ul {
+            width: 100%;
+            list-style: none;
+        }
+
+        .chat_wrap .chat ul li {
+            width: 100%;
+        }
+
+        .chat_wrap .chat ul li div.sender {
+            margin: 6px 10px 0 10px;
+            font-weight: bold;
+            color: #0C2D12;
+        }
+
+        .messageL {
+            display: inline-block;
+            word-break: break-all;
+            margin: 4px 10px;
+            max-width: 60%;
+            border: 1px solid #0c2d12;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #F2F4F2;
+            color: #0c2d12;
+            text-align: left;
+        }
+
+        .messageR {
+            display: inline-block;
+            word-break: break-all;
+            margin: 4px 10px;
+            max-width: 60%;
+            border: 1px solid #0C2D12;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #7fad7f;
+            color: #FFF;
+            text-align: left;
+        }
+
+        .messageDB {
+            display: inline-block;
+            word-break: break-all;
+            margin: 4px 10px;
+            max-width: 60%;
+            border: 1px solid #0C2D12;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #2D663C;
+            color: #FFF;
+            text-align: left;
+        }
+
+        .chat_wrap .input-div {
+            position: fixed;
+            bottom: 0;
+            width: 40%;
+            background-color: #FFFFFF;
+            text-align: center;
+            border: 1px solid darkgreen;
+            margin: 0 auto;
+        }
+
+        .chat_wrap .input-div > textarea {
+            width: 100%;
+            height: 80px;
+            border: none;
+            padding: 10px;
+        }
+
+        .chat_wrap .introduceEJ .EJ-chat2 {
+            display: none;
+        }
+
+        .chat_wrap .introduceEJ .EJ-chat3 {
+            display: none;
+        }
+
+        .chat_wrap .introduceEJ .EJ-chat4 {
+            display: none;
+        }
+
+        .chat_wrap .introduceEJ .VS-chat1 {
+            display: none;
+        }
+
+        .chat_wrap .introduceEJ .VS-chat2 {
+            display: none;
+        }
+
+        .chat_wrap .introduceEJ .VS-chat3 {
+            display: none;
+        }
+
+        .format {
+            display: none;
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            show_chat();
+        });
+
+        function show_chat() {
+            //$('#dbVisit').empty()
+            $.ajax({
+                type: 'GET',
+                url: '/p1_chat',
+                data: {},
+                success: function (response) {
+                    let rows = response['visitChat']
+
+                    for (let i = 0; i < rows.length; i++) {
+                        let chatMsg = rows[i]['visitChat']
+
+                        let temp_html = `<li>
+                                            <div class="VS">
+                                                <div>
+                                                    <div class="sender">visitor</div>
+                                                    <div class="messageDB">${chatMsg}</div>
+                                                </div>
+                                            </div>
+                                         </li>`
+                        $('#dbVisit').append(temp_html)
+                    }
+                    console.log(rows);
+                }
+            });
+        }
+
+        const Chat = (function () {
+            //const myName = "sparta";
+
+            // init 함수
+            function init() {
+                // enter 키 이벤트
+                $(document).on('keydown', 'div.input-div textarea', function (e) {
+                    if (e.keyCode == 13 && !e.shiftKey) {
+                        e.preventDefault();
+                        const messageDB = $(this).val();
+
+                        // 메시지 전송
+                        sendMessage(messageDB);
+                        // 입력창 clear
+                        clearTextarea();
+                    }
+                });
+            }
+
+
+            // 메세지 태그 생성
+            function createMessageTag(LR_className, senderName, messageDB) {
+                // 형식 가져오기
+                let chatLi = $('div.chat.format ul li').clone();
+
+                // 값 채우기
+                chatLi.addClass(LR_className);
+                chatLi.find('.sender span').text(senderName);
+                chatLi.find('.messageDB span').text(messageDB);
+
+                return chatLi;
+            }
+
+            // 메세지 태그 append
+            function appendMessageTag(LR_className, senderName, messageDB) {
+                const chatLi = createMessageTag(LR_className, senderName, messageDB);
+
+                $('div.chatDB ul').append(chatLi);
+                //$('div.chat:not(.introduceEJ .format) ul').append(chatLi);
+
+                // 스크롤바 아래 고정
+                //$('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
+            }
+
+            // 메세지 전송
+            function sendMessage(messageDB) {
+                $.ajax({
+                    type: "POST",
+                    url: "/p1_chat",
+                    data: {visitChat_give: messageDB},
+
+                    success: function (response) {
+                        alert(response["msg"])
+                        //window.location.reload()
+                    }
+                });
+
+              // 서버에 전송하는 코드로 후에 대체
+                const data = {
+                    "senderName": "visitor",
+                    "messageDB": messageDB
+                    //여기에 현재 시간 넣으면 될 듯
+                };
+
+                // 통신하는 기능이 없으므로 여기서 receive
+                resive(data);
+            }
+
+            // 메세지 입력박스 내용 지우기
+            function clearTextarea() {
+                $('div.input-div textarea').val('');
+            }
+
+            // 메세지 수신
+            function resive(data) {
+                //const LR = (data.senderName != myName) ? "left" : "right";
+
+
+                appendMessageTag("right", data.senderName, data.messageDB);
+            }
+
+            return {
+                'init': init
+            };
+        })();
+
+        $(function () {
+            Chat.init();
+        });
+
+
+        function open_box1() {
+            $('#v-chat1').show()
+        }
+
+        function open_box2() {
+            $('#ej-chat2').show()
+        }
+
+        function open_box3() {
+            $('#v-chat2').show()
+        }
+
+        function open_box4() {
+            $('#ej-chat3').show()
+        }
+
+        function open_box5() {
+            $('#v-chat3').show()
+        }
+
+        function open_box6() {
+            $('#ej-chat4').show()
+        }
+
+
+    </script>
 </head>
 <body>
-p1
+<div class="chat_wrap">
+    <div class="header">
+        김은정
+    </div>
+
+    <div class="chat introduceEJ">
+        <ul>
+            <li>
+                <div class="EJ">
+                    <div class="EJ-chat1">
+                        <div class="sender">김은정</div>
+                        <button class="messageL" onclick="open_box1()">안녕하세요!! &#128075;</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="VS">
+                    <div class="VS-chat1" id="v-chat1">
+                        <div class="sender">sparta</div>
+                        <button class="messageR" onclick="open_box2()">누구세요?</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="EJ">
+                    <div class="EJ-chat2" id="ej-chat2">
+
+                        <div class="sender">김은정</div>
+                        <ul class="leftChat">
+                            <li>
+                                <div class="messageL">저는 긍정 은정입니다~!!</div>
+                            </li>
+                            <li>
+                                <div class="messageL">긍정이란 말을 좋아하기도 하지만!</div>
+                            </li>
+                            <li>
+                                <div class="messageL">사실 이름의 '은'을 180도 돌리면 '긍'이 되어서 긍정이란 닉네임을 쓰고 있어요!</div>
+                            </li>
+                            <li>
+                                <button class="messageL" onclick="open_box3()">마침 제 MBTI도..! E.N.F.P 엔프피랍니다~!! 😊</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="VS">
+                    <div class="VS-chat2" id="v-chat2">
+                        <div class="sender">sparta</div>
+                        <ul class="rightChat">
+                            <li>
+                                <div class="messageR">오오!!</div>
+                            </li>
+                            <li>
+                                <div class="messageR">조금 더 소개해주세요!!</div>
+                            </li>
+                            <li>
+                                <button class="messageR" onclick="open_box4()">본인 장점이라던가... 장점이라던가... 장점이라던가..ㅋㅋㅋㅋㅋㅋ</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="EJ">
+                    <div class="EJ-chat3" id="ej-chat3">
+                        <div class="sender">김은정</div>
+                        <ul class="leftChat">
+                            <li>
+                                <div class="messageL">ㅋㅋㅋㅋㅋ</div>
+                            </li>
+                            <li>
+                                <div class="messageL">제 장점은 닉네임처럼 긍정적인 성격과</div>
+                            </li>
+                            <li>
+                                <div class="messageL">오늘 처음 본 사람과도 절친(?)이 될 수 있는 친화력이라고 생각합니다!!</div>
+                            </li>
+                            <li>
+                                <button class="messageL" onclick="open_box5()">다만 이 친화력은 한번 발동하면 에너지소모가 너무 커서ㅋㅋ...  요즘엔 상황을 봐 가면서 쓰고 있어요ㅎㅎ 😅</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="VS">
+                    <div class="VS-chat3" id="v-chat3">
+                        <div class="sender">sparta</div>
+                        <ul class="rightChat">
+                            <li>
+                                <div class="messageR">아 무슨 말인지 알 것 같아요ㅋㅋㅋ</div>
+                            </li>
+                            <li>
+                                <button class="messageR" onclick="open_box6()">그럼 은정님은 협업하는 과정에서는 어떤 스타일이세요?</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="EJ">
+                    <div class="EJ-chat4" id="ej-chat4">
+                        <div class="sender">김은정</div>
+                        <ul class="leftChat">
+                            <li>
+                                <div class="messageL">저는 주로 사람들 사이에서 의견을 들어보고 조율을 하거나</div>
+                            </li>
+                            <li>
+                                <div class="messageL">모임의 분위기를 하나로 모으려고 노력을 많이 하는 편인것 같아요</div>
+                            </li>
+                            <li>
+                                <div class="messageL">(사실 제가 어색한 분위기를 정말 못견딥니다 ㅎㅎㅎㅎ)</div>
+                            </li>
+                            <li>
+                                <div class="messageL">저에게 주어진 과제는 일단은 저 스스로 해결하려고 노력은 하는 편인데</div>
+                            </li>
+                            <li>
+                                <div class="messageL">맘처럼 쉽지가 않네요,,ㅎㅎ 😂</div>
+                            </li>
+                            <li>
+                                <div class="messageL">하지만! 열심히 해보도록 노력하겠습니다!! 아자아자!! &#128074; </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="chat chatVS">
+        <div class="chatDB">
+            <ul id="dbVisit">
+                <!-- 동적 생성 -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="input-div">
+        <textarea placeholder="방명록 작성 후 엔터!"></textarea>
+    </div>
+
+    <!-- format -->
+    <div class="chat format">
+        <ul id="vsList">
+            <li>
+                <div class="sender">
+                    <span></span>
+                </div>
+                <div class="messageDB">
+                    <span></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 
 </body>
 </html>
