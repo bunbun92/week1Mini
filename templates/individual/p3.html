@@ -40,25 +40,24 @@
             }
             document.getElementById('time' + cnt).setAttribute("class", "pastTime");
 
-        }
+        } //현재 시간 출력
 
 
 
         function deleteCommentZone(){
             // $('#showComments').load(location.href + ' #showComments');
             // $('#showComments').text("");
-            document.getElementById("showComments").innerHTML= "";
             // $('#comment').load(location.href + ' #comment');
             // $('#comment').value = null;
-        }
+            document.getElementById("showComments").innerHTML= "";
+        } //댓글 영역 제거
 
         function reloadArea() {
-
             // deleteCommentZone();
-            getAllComments();
             // setInterval(deleteCommentZone(), 200);
             // setInterval(getAllComments(), 200);
-        }
+            getAllComments();
+        } //댓글 영역만 리로드 였는데 그냥 append로 바꿈
 
         function getAllComments(){
             $.ajax({
@@ -66,9 +65,6 @@
                 url: "/p3_comment",
                 data: {},
                 success: function (response) {
-                    console.log(response['allComments'])
-                    console.log(response['msg'])
-
 
                     let rows = response['allComments'];
                     let tempHtml =``;
@@ -102,8 +98,7 @@
 
                 }
             })
-        }
-
+        } //DB에서 댓글들 전부 로드
 
         function saveComment(){
 
@@ -129,13 +124,11 @@
                     console.log(comment);
                     console.log(response['msg']);
 
-                    //window.location.reload();
                     reloadArea();
-
 
                 }
             })
-        }
+        } // 댓글 저장
 
         function deleteComment(num){
 
@@ -146,14 +139,10 @@
                 success: function (response) {
                     console.log(response['msg']);
 
-                    //window.location.reload();
                      reloadArea()
                 }
             })
-        }
-
-
-
+        } // 댓글 삭제
 
         let talkingBundleList = [];
         let check = false;
@@ -463,11 +452,11 @@
 
 
 
-                            </div>`;
+                            </div>`; // 문자열 전체
 
             talkingBundleList = tempHtml.split("<!!split1>");
 
-        }
+        } // 말풍선 문자열 만들깅
         makeString();
 
         function checkNextButtonEnd() {
@@ -475,7 +464,7 @@
                 document.getElementById("nextButton").setAttribute("class", "nextButtonEnd");
                 document.getElementById("skipButton").setAttribute("class", "nextButtonEnd");
             }
-        }
+        } // 진행 다 끝났는지 체크해서 버튼 속성 변경
 
         function showNextTalk(){
 
@@ -488,17 +477,15 @@
 
             let tempHtml = ``;
             tempHtml = talkingBundleList[cnt].split("<!!split2>");
-            console.log('tempHtml.length = ' + tempHtml.length);
+
             for(let i=0; i < tempHtml.length; i++){
 
-                console.log('i = ' + i);
                  $('#testd').append(tempHtml[i]);
-
 
             }
 
             cnt++;
-            console.log('cnt= '+ cnt);
+
             showCurrentTime();
 
             if(cnt == talkingBundleList.length){
